@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Saver | Premium Downloader</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS CDN -->
+     <!-- Favicon Modern Luxury Sunset (Social Saver) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fbbf24'/%3E%3Cstop offset='50%25' stop-color='%23f97316'/%3E%3Cstop offset='100%25' stop-color='%23f43f5e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='18' fill='url(%23grad)'/%3E%3Cpath d='M32 16v24m-8-8 8 8 8-8M20 46h24' stroke='%23ffffff' stroke-width='5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Font Poppins & Plus Jakarta Sans untuk tipografi luxury -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    body {
+        font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif;
+    }
+    /* Animasi piringan hitam musik & loader */
+    @keyframes spin-slow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    .animate-spin-slow {
+        animation: spin-slow 12s linear infinite;
+    }
+</style>
+  <style>
+    /* --- 1. LATAR BELAKANG LUXURY ORANGE CERAH --- */
+    body {
+        min-height: 100vh;
+        /* Gradasi Peach, Warm Apricot, & Soft Orange Cerah */
+        background: linear-gradient(135deg, #fffaf5 0%, #fff3e8 35%, #ffedd5 70%, #fed7aa 100%);
+        background-attachment: fixed;
+        color: #1e293b;
+        overflow-x: hidden;
+    }
+
+    /* Efek Aura Sunset Halus di Belakang Layar */
+    .orb {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(100px);
+        z-index: 0;
+        pointer-events: none;
+        animation: floatOrb 8s ease-in-out infinite alternate;
+    }
+    .orb-1 {
+        width: 380px;
+        height: 380px;
+        background: rgba(251, 146, 60, 0.22); /* Soft Tangerine */
+        top: -5%;
+        left: 10%;
+    }
+    .orb-2 {
+        width: 450px;
+        height: 450px;
+        background: rgba(254, 215, 170, 0.35); /* Soft Amber Glow */
+        bottom: 5%;
+        right: 5%;
+        animation-delay: 3s;
+    }
+
+    @keyframes floatOrb {
+        0% { transform: translate(0, 0) scale(1); }
+        100% { transform: translate(25px, -30px) scale(1.08); }
+    }
+
+    /* --- 2. TOMBOL HASIL DOWNLOAD (Dihasilkan oleh JS) --- */
+    .btn-action {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 22px;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 700;
+        text-decoration: none;
+        background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
+        color: #ffffff !important;
+        box-shadow: 0 8px 20px -4px rgba(234, 88, 12, 0.35);
+        transition: all 0.25s ease;
+        border: none;
+    }
+    .btn-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 25px -4px rgba(234, 88, 12, 0.45);
+        filter: brightness(1.05);
+    }
+
+    /* --- 3. TOMBOL COPY CAPTION (Dihasilkan oleh JS) --- */
+    .btn-copy-caption {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 18px;
+        border-radius: 9999px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        background: #fff7ed;
+        color: #ea580c;
+        border: 1px solid #fdba74;
+        cursor: pointer;
+        margin: 12px 0;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 6px rgba(249, 115, 22, 0.08);
+    }
+    .btn-copy-caption:hover {
+        background: #ea580c;
+        color: #ffffff;
+        border-color: #ea580c;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 15px rgba(234, 88, 12, 0.2);
+    }
+
+    /* --- 4. ITEM RIWAYAT / HISTORY (Dihasilkan oleh JS) --- */
+    .history-item {
+        min-width: 145px;
+        max-width: 145px;
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid #fed7aa;
+        border-radius: 18px;
+        padding: 10px;
+        box-shadow: 0 6px 18px rgba(251, 146, 60, 0.08);
+        transition: all 0.25s ease;
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+    }
+    .history-item:hover {
+        transform: translateY(-3px);
+        border-color: #fb923c;
+        box-shadow: 0 10px 24px rgba(251, 146, 60, 0.16);
+    }
+    .history-thumb {
+        width: 100%;
+        height: 95px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 8px;
+    }
+    .history-tag {
+        font-size: 0.65rem;
+        font-weight: 800;
+        padding: 2px 8px;
+        border-radius: 6px;
+        background: #ffedd5;
+        color: #c2410c;
+        text-transform: uppercase;
+        align-self: flex-start;
+        margin-bottom: 5px;
+    }
+    .history-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #334155;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 8px;
+    }
+    .btn-history-action {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: #ea580c;
+        text-decoration: none;
+        text-align: center;
+        border: 1px solid #fdba74;
+        background: #fff7ed;
+        border-radius: 8px;
+        padding: 4px;
+        transition: 0.2s;
+    }
+    .btn-history-action:hover {
+        background: #ea580c;
+        color: #ffffff;
+        border-color: #ea580c;
+    }
+
+    /* --- 5. SERVER STATUS PILL (Pojok Kiri Bawah) --- */
+    .server-status {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(12px);
+        padding: 7px 16px;
+        border-radius: 9999px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #475569;
+        border: 1px solid #fed7aa;
+        z-index: 40;
+        box-shadow: 0 8px 25px rgba(249, 115, 22, 0.12);
+    }
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #cbd5e1;
+    }
+    .status-online {
+        background: #10b981;
+        box-shadow: 0 0 10px #10b981;
+    }
+    .status-offline {
+        background: #f43f5e;
+        box-shadow: 0 0 10px #f43f5e;
+    }
+</style>
+</head>
+<body>
+    <!-- ================= 1. HEADER (FULL-WIDTH MODERN NAVBAR) ================= -->
+<header class="w-full fixed top-0 left-0 z-50 bg-white/90 backdrop-blur-md border-b border-orange-100 shadow-sm transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        
+        <!-- Brand Logo -->
+        <a href="#" class="flex items-center gap-3 group no-underline">
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-400 via-orange-500 to-rose-500 flex items-center justify-center text-white shadow-md shadow-orange-500/25 group-hover:scale-105 transition-all">
+                <i class="fas fa-cloud-download-alt text-lg"></i>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-xl font-extrabold tracking-tight text-slate-900 leading-none">
+                    Social<span class="bg-gradient-to-r from-orange-500 via-amber-500 to-rose-500 bg-clip-text text-transparent">Saver</span>
+                </span>
+                <span class="text-[10px] font-bold tracking-widest uppercase text-orange-600 mt-1">Multi-Platform Downloader</span>
+            </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden lg:flex items-center gap-8 text-sm font-bold text-slate-600">
+            <a href="#" class="text-orange-600 hover:text-orange-700 transition">Beranda</a>
+            <a href="#urlInput" class="hover:text-orange-600 transition">Video HD</a>
+            <a href="#imgUrlInput" class="hover:text-orange-600 transition">Photo & Carousel</a>
+            <a href="#musicUrlInput" class="hover:text-orange-600 transition">Audio MP3</a>
+            <a href="#history-section" class="hover:text-orange-600 transition flex items-center gap-1.5">
+                <i class="fas fa-history text-xs text-orange-500"></i> Riwayat
+            </a>
+            <a href="#about-section" class="hover:text-orange-600 transition">Tentang Kami</a>
+        </nav>
+
+        <!-- Right Side: CTA Button & Mobile Hamburger Toggle -->
+        <div class="flex items-center gap-3">
+            <a href="#urlInput" class="hidden sm:inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 hover:from-amber-600 hover:to-rose-600 text-white font-extrabold text-xs uppercase tracking-wider shadow-md shadow-orange-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all no-underline">
+                <span>Mulai Unduh</span>
+                <i class="fas fa-bolt text-xs"></i>
+            </a>
+
+            <!-- Tombol Hamburger Mobile -->
+            <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 rounded-xl bg-orange-50 border border-orange-200 text-orange-600 flex items-center justify-center text-base focus:outline-none" aria-label="Toggle Menu">
+                <i class="fas fa-bars" id="menu-icon"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden w-full bg-white border-b border-orange-100 px-6 py-5 flex flex-col gap-4 text-sm font-bold text-slate-700 shadow-xl">
+        <a href="#" onclick="toggleMobileMenu()" class="py-2 text-orange-600 hover:text-orange-700">Beranda</a>
+        <a href="#urlInput" onclick="toggleMobileMenu()" class="py-2 hover:text-orange-600">Video Downloader</a>
+        <a href="#imgUrlInput" onclick="toggleMobileMenu()" class="py-2 hover:text-orange-600">Photo & Carousel</a>
+        <a href="#musicUrlInput" onclick="toggleMobileMenu()" class="py-2 hover:text-orange-600">Audio MP3</a>
+        <a href="#history-section" onclick="toggleMobileMenu()" class="py-2 hover:text-orange-600 flex items-center gap-2">
+            <i class="fas fa-history text-orange-500"></i> Riwayat Unduhan
+        </a>
+        <a href="#about-section" onclick="toggleMobileMenu()" class="py-2 hover:text-orange-600">Tentang Kami</a>
+        <a href="#urlInput" onclick="toggleMobileMenu()" class="mt-2 w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white text-center font-bold text-xs uppercase tracking-wider shadow-md">
+            Tempel Link Sekarang
+        </a>
+    </div>
+</header>
+
+<!-- Spacer agar konten tidak tertutup navbar fixed -->
+
+
+   <div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+
+<!-- DYNAMIC ISLAND TOAST NOTIFICATION -->
+<!-- ================= 1. LUXURY NOTIFICATION TOAST ================= -->
+<div id="toast" class="fixed top-5 right-5 sm:top-6 sm:right-6 z-50 transform transition-all duration-300 ease-out hidden max-w-sm w-[90%] sm:w-auto">
+    <div class="flex items-center gap-3.5 px-5 py-4 rounded-2xl bg-white/95 backdrop-blur-xl border border-orange-200/80 shadow-[0_15px_35px_-5px_rgba(249,115,22,0.25)] text-slate-800">
+        <div id="toast-icon" class="flex-shrink-0 w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-400 to-orange-500 text-white flex items-center justify-center shadow-md shadow-orange-500/20 text-xs">
+            <i class="fas fa-check"></i>
+        </div>
+        <div class="flex-1 text-sm font-semibold text-slate-800 leading-snug" id="toast-text">
+            Notifikasi muncul di sini
+        </div>
+    </div>
+</div>
+<!-- ================= HERO SECTION (MENEMPEL MULUS KE HEADER - ZERO GAP) ================= -->
+<!-- ================= HERO SECTION (LEGA & TIDAK NYUNGSEP) ================= -->
+<!-- ================= HERO SECTION (LEBIH TINGGI & VIDEO LEBIH JERNIH) ================= -->
+<section class="relative w-full overflow-hidden min-h-[85vh] sm:min-h-[92vh] flex flex-col justify-center pt-40 sm:pt-52 pb-24 sm:pb-32 -mt-20 bg-transparent">
+    
+    <!-- 1. BACKGROUND VIDEO & AMBIENT OVERLAY (Gradasi Dikurangi, Video Lebih Tajam) -->
+    <div class="absolute inset-0 -z-20 overflow-hidden pointer-events-none">
+        <!-- Opacity dinaikkan ke 45% dan blur dihilangkan agar video tampak jelas -->
+        <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-45">
+            <source src="videoplayback.mp4" type="video/mp4">
+        </video>
+        <!-- Overlay Gradasi Tipis Transparan (Hanya sedikit penahan kontras teks) -->
+        <div class="absolute inset-0 bg-gradient-to-b from-[#fffaf5]/25 via-black/10 to-[#fffaf5]/35"></div>
+    </div>
+
+    <!-- 2. Pijar Cahaya Sunset Lembut (Dibuat Tipis agar Tidak Menutupi Video) -->
+    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[650px] h-[250px] sm:h-[350px] bg-gradient-to-r from-amber-400/10 via-orange-400/10 to-rose-400/10 blur-[120px] rounded-full pointer-events-none -z-10"></div>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center relative z-10 w-full my-auto">
+
+        <!-- 3. Announcement Badge -->
+        <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/95 backdrop-blur-xl border border-orange-200/90 shadow-[0_4px_20px_rgba(251,146,60,0.12)] mb-6 sm:mb-8 hover:scale-105 transition-transform duration-200 cursor-default">
+            <span class="flex h-2 w-2 relative">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+            </span>
+            <span class="text-xs font-bold text-slate-800 tracking-wide">
+                Next-Gen Cloud Downloader v3.0
+            </span>
+            <span class="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-sm">
+                Gratis
+            </span>
+        </div>
+
+        <!-- 4. Headline Utama -->
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.14] mb-5 sm:mb-6 max-w-4xl drop-shadow-sm">
+            Simpan Media Sosial <br class="hidden sm:block">
+            <span class="bg-gradient-to-r from-orange-500 via-amber-500 to-rose-500 bg-clip-text text-transparent">
+                Kualitas Asli 4K Tanpa Batas
+            </span>
+        </h1>
+
+        <!-- 5. Subheadline -->
+        <p class="text-sm sm:text-base lg:text-lg text-slate-700 max-w-2xl mx-auto leading-relaxed mb-10 sm:mb-12 font-medium drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
+            Ekstraksi video TikTok tanpa watermark, audio YouTube MP3, reels Instagram, dan foto HD secara instan langsung ke penyimpanan Anda.
+        </p>
+
+        <!-- 6. Tombol Aksi CTA -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto mb-14 sm:mb-16">
+            <a href="#urlInput" onclick="document.getElementById('urlInput').focus()" class="px-8 py-4 rounded-2xl sm:rounded-full bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 hover:from-amber-600 hover:to-rose-600 text-white font-extrabold text-sm uppercase tracking-wider shadow-[0_12px_30px_rgba(249,115,22,0.35)] hover:shadow-[0_15px_35px_rgba(249,115,22,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 no-underline">
+                <i class="fas fa-bolt text-xs text-amber-200"></i>
+                <span>Tempel Link Video</span>
+                <i class="fas fa-arrow-down text-xs"></i>
+            </a>
+
+            <a href="#about-section" class="px-7 py-4 rounded-2xl sm:rounded-full bg-white/95 hover:bg-white backdrop-blur-xl border border-orange-200/90 text-slate-700 font-bold text-sm tracking-wide shadow-sm hover:shadow-md hover:text-orange-600 transition-all flex items-center justify-center gap-2 no-underline">
+                <i class="fas fa-info-circle text-orange-500 text-xs"></i>
+                <span>Pelajari Fitur</span>
+            </a>
+        </div>
+
+        <!-- 7. AUTO-SCROLL HORIZONTAL MARQUEE -->
+        <div class="w-full max-w-4xl overflow-hidden py-3 relative mask-fade-edges">
+            <div class="marquee-track flex items-center gap-4 sm:gap-6">
+                
+                <!-- SET 1 -->
+                <div class="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/95 backdrop-blur-md border border-orange-200/90 shadow-sm shrink-0">
+                    <i class="fab fa-youtube text-red-500 text-base"></i>
+                    <span class="text-xs sm:text-sm font-bold text-slate-800">YouTube Video & MP3</span>
+                </div>
+                <div class="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/95 backdrop-blur-md border border-orange-200/90 shadow-sm shrink-0">
+                    <i class="fab fa-tiktok text-slate-900 text-base"></i>
+                    <span class="text-xs sm:text-sm font-bold text-slate-800">TikTok No Watermark</span>
+                </div>
+                <div class="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/95 backdrop-blur-md border border-orange-200/90 shadow-sm shrink-0">
+                    <i class="fab fa-instagram text-rose-500 text-base"></i>
+                    <span class="text-xs sm:text-sm font-bold text-slate-800">Instagram Reels & Photo</span>
+                </div>
+                <div class="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/95 backdrop-blur-md border border-orange-200/90 shadow-sm shrink-0">
+                    <i class="fab fa-facebook text-blue-600 text-base"></i>
+                    <span class="text-xs sm:text-sm font-bold text-slate-800">Facebook Video HD</span>
+                </div>
+                <div class="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/95 backdrop-blur-md border border-orange-200/90 shadow-sm shrink-0">
+                    <i class="fab fa-twitter text-slate-900 text-base"></i>
+                    <span class="text-xs sm:text-sm font-bold text-slate-800">Twitter / X Media</span>
+                </div>
+                <div class="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/95 backdrop-blur-md border border-orange-200/90 shadow-sm shrink-0">
+                    <i class="fab fa-soundcloud text-orange-500 text-base"></i>
+                    <span class="text-xs sm:text-sm font-bold text-slate-800">SoundCloud Track</span>
+                </div>
+
+                <!-- SET 2 (Duplikasi Loop Mulus) -->
+                <div class="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/95 backdrop-blur-md border border-orange-200/90 shadow-sm shrink-0">
+                    <i class="fab fa-youtube text-red-500 text-base"></i>
+                    <span class="text-xs sm:text-sm font-bold text-slate-800">YouTube Video & MP3</span>
+                </div>
+                <div class="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/95 backdrop-blur-md border border-orange-200/90 shadow-sm shrink-0">
+                    <i class="fab fa-tiktok text-slate-900 text-base"></i>
+                    <span class="text-xs sm:text-sm font-bold text-slate-800">TikTok No Watermark</span>
+                </div>
+                <div class="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/95 backdrop-blur-md border border-orange-200/90 shadow-sm shrink-0">
+                    <i class="fab fa-instagram text-rose-500 text-base"></i>
+                    <span class="text-xs sm:text-sm font-bold text-slate-800">Instagram Reels & Photo</span>
+                </div>
+                <div class="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/95 backdrop-blur-md border border-orange-200/90 shadow-sm shrink-0">
+                    <i class="fab fa-facebook text-blue-600 text-base"></i>
+                    <span class="text-xs sm:text-sm font-bold text-slate-800">Facebook Video HD</span>
+                </div>
+                <div class="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/95 backdrop-blur-md border border-orange-200/90 shadow-sm shrink-0">
+                    <i class="fab fa-twitter text-slate-900 text-base"></i>
+                    <span class="text-xs sm:text-sm font-bold text-slate-800">Twitter / X Media</span>
+                </div>
+                <div class="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/95 backdrop-blur-md border border-orange-200/90 shadow-sm shrink-0">
+                    <i class="fab fa-soundcloud text-orange-500 text-base"></i>
+                    <span class="text-xs sm:text-sm font-bold text-slate-800">SoundCloud Track</span>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- CSS Marquee & Masking Ujung -->
+<style>
+    @keyframes infiniteScroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+    .marquee-track {
+        display: flex;
+        width: max-content;
+        animation: infiniteScroll 22s linear infinite;
+    }
+    .marquee-track:hover {
+        animation-play-state: paused;
+    }
+    .mask-fade-edges {
+        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+</style>
+<section id="about-section" class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 relative z-10">
+    <div class="rounded-3xl bg-white/85 backdrop-blur-2xl border border-white/80 p-8 sm:p-14 lg:p-16 shadow-[0_20px_50px_rgba(251,146,60,0.12)] relative overflow-hidden">
+        
+        <!-- Ambient Sunset Glow -->
+        <div class="absolute -top-32 -left-32 w-80 h-80 bg-gradient-to-br from-amber-300/30 via-orange-400/20 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-32 -right-32 w-80 h-80 bg-gradient-to-tl from-rose-400/25 via-orange-300/20 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center relative z-10">
+            
+            <!-- Kolom Kiri: Visual Showcase & Metrik Statistik -->
+            <div class="lg:col-span-5 flex flex-col gap-4">
+                <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-orange-50/90 to-white/95 border border-orange-200/80 shadow-md">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 text-orange-700 text-xs font-bold uppercase mb-4">
+                        <i class="fas fa-shield-alt text-amber-500"></i> Cloud Native Engine
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-black text-slate-900 leading-snug mb-3">
+                        Ekstraksi Berkecepatan Tinggi Tanpa Menurunkan Resolusi
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
+                        Social Saver memproses tautan langsung melalui jalur *content delivery network* (CDN), menghapus tanda air (*watermark*), dan menyusun file siap unduh dalam hitungan detik.
+                    </p>
+
+                    <!-- 4 Kartu Mini Metrik -->
+                    <div class="grid grid-cols-2 gap-3 pt-4 border-t border-orange-200/60">
+                        <div class="p-3.5 rounded-2xl bg-white border border-orange-100 text-center shadow-sm">
+                            <span class="block text-xl font-extrabold text-orange-600">0 Detik</span>
+                            <span class="text-[11px] font-semibold text-slate-500">Bebas Antrean</span>
+                        </div>
+                        <div class="p-3.5 rounded-2xl bg-white border border-orange-100 text-center shadow-sm">
+                            <span class="block text-xl font-extrabold text-orange-600">4K / HD</span>
+                            <span class="text-[11px] font-semibold text-slate-500">Kualitas Murni</span>
+                        </div>
+                        <div class="p-3.5 rounded-2xl bg-white border border-orange-100 text-center shadow-sm">
+                            <span class="block text-xl font-extrabold text-orange-600">320kbps</span>
+                            <span class="text-[11px] font-semibold text-slate-500">Audio Jernih</span>
+                        </div>
+                        <div class="p-3.5 rounded-2xl bg-white border border-orange-100 text-center shadow-sm">
+                            <span class="block text-xl font-extrabold text-orange-600">100%</span>
+                            <span class="text-[11px] font-semibold text-slate-500">Gratis & Aman</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kolom Kanan: Narasi & Poin Keunggulan -->
+            <div class="lg:col-span-7 flex flex-col items-start">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 border border-orange-200/80 text-orange-700 text-xs font-bold uppercase mb-4">
+                    <i class="fas fa-sparkles text-amber-500"></i> Tentang Platform Kami
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-5">
+                    Solusi Terpadu Menyimpan Konten Digital Favorit Anda
+                </h2>
+                <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-6">
+                    Banyak platform media sosial membatasi fitur unduhan langsung atau menurunkan kualitas video asli secara drastis. **Social Saver** hadir untuk menjembatani hal tersebut—memberikan kemudahan mengunduh video, kompilasi foto carousel, dan trek audio tanpa batasan kuota harian.
+                </p>
+
+                <!-- Checklist Keunggulan -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full mb-8">
+                    <div class="flex items-start gap-3">
+                        <div class="w-6 h-6 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center text-xs flex-shrink-0 mt-0.5">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">Tanpa Watermark</h4>
+                            <p class="text-xs text-slate-500 mt-0.5">Video TikTok dan IG Reels bersih dari logo aplikasi.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="w-6 h-6 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center text-xs flex-shrink-0 mt-0.5">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">YouTube Video & MP3</h4>
+                            <p class="text-xs text-slate-500 mt-0.5">Konversi lancar bebas Error 403 Forbidden.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="w-6 h-6 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center text-xs flex-shrink-0 mt-0.5">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">Database Google Sheets</h4>
+                            <p class="text-xs text-slate-500 mt-0.5">Riwayat tersinkronisasi otomatis ke lembar kerja pribadi.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="w-6 h-6 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center text-xs flex-shrink-0 mt-0.5">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-800">Responsif di Semua HP</h4>
+                            <p class="text-xs text-slate-500 mt-0.5">Tampilan pas dan nyaman disentuh di Android maupun iPhone.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#urlInput" class="px-8 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider shadow-lg hover:scale-105 active:scale-95 transition-all no-underline">
+                    Mulai Unduh Sekarang <i class="fas fa-arrow-up ml-2 text-orange-400"></i>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ================= 2. MAIN WRAPPER (BRIGHT LUXURY THEME) ================= -->
+<div class="main-wrapper w-full max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-14 flex flex-col gap-8 sm:gap-12 relative z-10">
+
+    <!-- === SECTION 1: VIDEO DOWNLOADER (HERO CARD) === -->
+    <div class="container relative overflow-hidden rounded-3xl bg-white/85 backdrop-blur-2xl border border-white/80 p-6 sm:p-10 shadow-[0_20px_50px_rgba(251,146,60,0.12)] hover:shadow-[0_25px_60px_rgba(249,115,22,0.18)] transition-all duration-300">
+        <!-- Ambient Radial Glow -->
+        <div class="absolute -top-24 -right-24 w-60 h-60 bg-gradient-to-br from-amber-300/30 via-orange-400/20 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- Luxury Tagline -->
+        <!-- Pembungkus Rata Tengah Presisi -->
+        <div class="flex flex-col items-center text-center">
+            <!-- Luxury Tagline -->
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-orange-100 to-amber-100 border border-orange-200/70 text-orange-700 text-xs font-bold tracking-wider uppercase mb-4 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+                All-in-One Downloader
+            </div>
+
+            <!-- Title -->
+            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 mb-3">
+                Social <span class="bg-gradient-to-r from-orange-500 via-amber-500 to-rose-500 bg-clip-text text-transparent">Saver</span>
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="subtitle text-sm sm:text-base text-slate-600 max-w-md mx-auto mb-6 leading-relaxed">
+                Download video kualitas HD tanpa watermark dari <br class="hidden sm:block">
+                <span class="font-semibold text-orange-600">TikTok, Instagram Reels, Facebook & Twitter (X)</span>.
+            </p>
+        </div>
+
+        <!-- Platform Icons -->
+       <!-- Platform Icons (Sudah Ditambahkan YouTube) -->
+        <div class="platforms flex justify-center items-center gap-3.5 sm:gap-6 mb-8 text-xl sm:text-2xl text-slate-400">
+            <!-- Icon YouTube -->
+            <div class="w-11 h-11 rounded-2xl bg-orange-50/80 border border-orange-100/80 flex items-center justify-center hover:text-red-600 hover:scale-110 hover:border-red-300 hover:shadow-md transition-all cursor-pointer" title="YouTube">
+                <i class="fab fa-youtube"></i>
+            </div>
+            <!-- Icon TikTok -->
+            <div class="w-11 h-11 rounded-2xl bg-orange-50/80 border border-orange-100/80 flex items-center justify-center hover:text-black hover:scale-110 hover:border-orange-300 hover:shadow-md transition-all cursor-pointer" title="TikTok">
+                <i class="fab fa-tiktok"></i>
+            </div>
+            <!-- Icon Instagram -->
+            <div class="w-11 h-11 rounded-2xl bg-orange-50/80 border border-orange-100/80 flex items-center justify-center hover:text-rose-500 hover:scale-110 hover:border-rose-300 hover:shadow-md transition-all cursor-pointer" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </div>
+            <!-- Icon Facebook -->
+            <div class="w-11 h-11 rounded-2xl bg-orange-50/80 border border-orange-100/80 flex items-center justify-center hover:text-blue-600 hover:scale-110 hover:border-blue-300 hover:shadow-md transition-all cursor-pointer" title="Facebook">
+                <i class="fab fa-facebook"></i>
+            </div>
+            <!-- Icon Twitter / X -->
+            <div class="w-11 h-11 rounded-2xl bg-orange-50/80 border border-orange-100/80 flex items-center justify-center hover:text-slate-900 hover:scale-110 hover:border-slate-300 hover:shadow-md transition-all cursor-pointer" title="Twitter / X">
+                <i class="fab fa-twitter"></i>
+            </div>
+        </div>
+
+        <!-- Input Bar Luxury Island -->
+        <div class="input-group relative flex flex-col sm:flex-row items-stretch sm:items-center bg-white/95 rounded-2xl sm:rounded-full p-2 border border-orange-200/80 shadow-[0_8px_30px_rgba(249,115,22,0.08)] focus-within:border-orange-400 focus-within:ring-4 focus-within:ring-orange-400/20 transition-all gap-2">
+            <div class="relative flex-1 flex items-center">
+                <i class="fas fa-link absolute left-4 text-orange-400 text-sm"></i>
+                <input type="text" id="urlInput" placeholder="Tempel tautan video TikTok/IG..." class="w-full pl-11 pr-12 sm:pr-4 py-3.5 bg-transparent text-slate-800 placeholder-slate-400 text-sm font-medium focus:outline-none">
+                <button class="btn-paste sm:hidden absolute right-3 text-orange-500 hover:text-orange-600 p-2" onclick="pasteLink()" title="Tempel">
+                    <i class="fas fa-paste"></i>
+                </button>
+            </div>
+            <div class="flex items-center gap-2">
+                <button class="btn-paste hidden sm:flex items-center gap-1.5 px-4 py-3 rounded-full text-slate-600 hover:text-orange-600 hover:bg-orange-50 text-xs font-semibold transition" onclick="pasteLink()" title="Tempel">
+                    <i class="fas fa-paste text-orange-500"></i> Paste
+                </button>
+                <button class="btn-download w-full sm:w-auto px-7 py-3.5 rounded-xl sm:rounded-full bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 hover:from-amber-600 hover:to-rose-600 text-white font-bold text-sm tracking-wide shadow-lg shadow-orange-500/30 hover:shadow-orange-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer" onclick="fetchVideo()">
+                    Download <i class="fas fa-bolt text-xs"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Loader -->
+        <div class="loader hidden my-8 mx-auto w-10 h-10 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin" id="loader"></div>
+
+        <!-- Result Section -->
+        <div id="result-area" class="mt-8 hidden animate-fade-in">
+            <div class="result-card p-5 sm:p-7 rounded-2xl bg-gradient-to-b from-orange-50/70 to-white/90 border border-orange-200/60 shadow-inner flex flex-col items-center">
+                <div class="relative group max-w-xs w-full mb-4">
+                    <img src="" alt="Thumbnail" id="thumb" class="result-thumb w-full h-52 object-cover rounded-xl shadow-md border-2 border-white" referrerpolicy="no-referrer">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition"></div>
+                </div>
+                <h3 id="videoTitle" class="result-title text-sm sm:text-base font-bold text-slate-800 text-center mb-4 line-clamp-2 max-w-md">Judul Video...</h3>
+                <div class="download-actions flex flex-wrap gap-2.5 justify-center w-full" id="downloadButtons"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === SECTION 2: PHOTO DOWNLOADER === -->
+    <div class="container relative overflow-hidden rounded-3xl bg-white/85 backdrop-blur-2xl border border-white/80 p-6 sm:p-10 shadow-[0_20px_50px_rgba(251,146,60,0.12)] hover:shadow-[0_25px_60px_rgba(249,115,22,0.18)] transition-all duration-300">
+        <div class="flex flex-col items-center text-center">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-400 to-orange-500 text-white flex items-center justify-center text-xl shadow-md shadow-orange-500/25 mb-4">
+                <i class="fas fa-images"></i>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Photo & Carousel Downloader</h2>
+            <p class="subtitle text-sm text-slate-600 mt-1 mb-6 max-w-sm">
+                Simpan slide foto IG, foto TikTok HD, & Twitter Gallery tanpa kompresi.
+            </p>
+        </div>
+
+        <!-- Input Bar Island -->
+        <div class="input-group relative flex flex-col sm:flex-row items-stretch sm:items-center bg-white/95 rounded-2xl sm:rounded-full p-2 border border-orange-200/80 shadow-[0_8px_30px_rgba(249,115,22,0.08)] focus-within:border-orange-400 focus-within:ring-4 focus-within:ring-orange-400/20 transition-all gap-2">
+            <div class="relative flex-1 flex items-center">
+                <i class="fas fa-camera absolute left-4 text-orange-400 text-sm"></i>
+                <input type="text" id="imgUrlInput" placeholder="Tempel link foto / postingan..." class="w-full pl-11 pr-12 sm:pr-4 py-3.5 bg-transparent text-slate-800 placeholder-slate-400 text-sm font-medium focus:outline-none">
+                <button class="btn-paste sm:hidden absolute right-3 text-orange-500 hover:text-orange-600 p-2" onclick="pasteImageLink()" title="Tempel">
+                    <i class="fas fa-paste"></i>
+                </button>
+            </div>
+            <div class="flex items-center gap-2">
+                <button class="btn-paste hidden sm:flex items-center gap-1.5 px-4 py-3 rounded-full text-slate-600 hover:text-orange-600 hover:bg-orange-50 text-xs font-semibold transition" onclick="pasteImageLink()" title="Tempel">
+                    <i class="fas fa-paste text-orange-500"></i> Paste
+                </button>
+                <button class="btn-download w-full sm:w-auto px-7 py-3.5 rounded-xl sm:rounded-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold text-sm tracking-wide shadow-lg shadow-orange-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer" onclick="fetchImage()">
+                    Get Photo <i class="fas fa-camera text-xs"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Loader -->
+        <div class="loader hidden my-8 mx-auto w-10 h-10 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin" id="loader-img"></div>
+
+        <!-- Gallery Result -->
+        <div id="result-area-img" class="mt-8 hidden">
+            <div id="image-gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 justify-items-center"></div>
+        </div>
+    </div>
+
+    <!-- === SECTION 3: MUSIC DOWNLOADER === -->
+  <!-- === SECTION 3: MUSIC DOWNLOADER === -->
+    <div class="container relative overflow-hidden rounded-3xl bg-white/85 backdrop-blur-2xl border border-white/80 p-6 sm:p-10 shadow-[0_20px_50px_rgba(251,146,60,0.12)] hover:shadow-[0_25px_60px_rgba(249,115,22,0.18)] transition-all duration-300">
+        <div class="flex flex-col items-center text-center">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-400 to-rose-500 text-white flex items-center justify-center text-xl shadow-md shadow-rose-500/25 mb-4">
+                <i class="fas fa-headphones-alt"></i>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Audio & MP3 Extractor</h2>
+            <!-- Teks diperbarui agar YouTube tercantum di sini -->
+            <p class="subtitle text-sm text-slate-600 mt-1 mb-6 max-w-sm">
+                Unduh lagu kualitas jernih dari <span class="font-bold text-orange-600">YouTube MP3</span>, TikTok Audio, Instagram & SoundCloud.
+            </p>
+        </div>
+
+        <!-- Input Bar Island -->
+        <div class="input-group relative flex flex-col sm:flex-row items-stretch sm:items-center bg-white/95 rounded-2xl sm:rounded-full p-2 border border-orange-200/80 shadow-[0_8px_30px_rgba(249,115,22,0.08)] focus-within:border-orange-400 focus-within:ring-4 focus-within:ring-orange-400/20 transition-all gap-2">
+            <div class="relative flex-1 flex items-center">
+                <i class="fas fa-music absolute left-4 text-orange-400 text-sm"></i>
+                <!-- Placeholder diperbarui -->
+                <input type="text" id="musicUrlInput" placeholder="Tempel tautan lagu YouTube / TikTok / IG..." class="w-full pl-11 pr-12 sm:pr-4 py-3.5 bg-transparent text-slate-800 placeholder-slate-400 text-sm font-medium focus:outline-none">
+                <button class="btn-paste sm:hidden absolute right-3 text-orange-500 hover:text-orange-600 p-2" onclick="pasteMusicLink()" title="Tempel">
+                    <i class="fas fa-paste"></i>
+                </button>
+            </div>
+            <div class="flex items-center gap-2">
+                <button class="btn-paste hidden sm:flex items-center gap-1.5 px-4 py-3 rounded-full text-slate-600 hover:text-orange-600 hover:bg-orange-50 text-xs font-semibold transition" onclick="pasteMusicLink()" title="Tempel">
+                    <i class="fas fa-paste text-orange-500"></i> Paste
+                </button>
+                <button class="btn-download w-full sm:w-auto px-7 py-3.5 rounded-xl sm:rounded-full bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 hover:from-amber-600 hover:to-rose-600 text-white font-bold text-sm tracking-wide shadow-lg shadow-orange-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer" onclick="fetchMusic()">
+                    Get Audio <i class="fas fa-music text-xs"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Loader -->
+        <div class="loader hidden my-8 mx-auto w-10 h-10 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin" id="loader-music"></div>
+
+        <!-- Audio Player Card Result -->
+       <!-- Audio Player Card Result (Versi Mewah) -->
+        <div id="result-area-music" class="mt-8 hidden">
+            <div class="result-card p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-orange-50/90 via-white to-orange-50/40 border border-orange-200/80 shadow-[0_15px_35px_-5px_rgba(249,115,22,0.12)] flex flex-col items-center relative overflow-hidden">
+                <!-- Radial Glow Background -->
+                <div class="absolute -top-12 -right-12 w-40 h-40 bg-amber-400/20 rounded-full blur-2xl pointer-events-none"></div>
+
+                <!-- Vinyl Record Glowing Cover -->
+                <div class="relative w-36 h-36 sm:w-44 sm:h-44 p-2.5 rounded-full bg-gradient-to-tr from-amber-400 via-orange-500 to-rose-500 shadow-[0_12px_30px_rgba(249,115,22,0.35)] flex items-center justify-center mb-5">
+                    <img src="" id="music-thumb" class="result-thumb w-full h-full object-cover rounded-full border-4 border-white animate-spin-slow shadow-md" referrerpolicy="no-referrer">
+                    <!-- Center Vinyl Hole -->
+                    <div class="w-8 h-8 bg-white rounded-full absolute border-4 border-orange-500 shadow-inner flex items-center justify-center">
+                        <div class="w-2.5 h-2.5 bg-orange-500 rounded-full"></div>
+                    </div>
+                </div>
+
+                <!-- Tag Status -->
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100/80 border border-orange-200 text-orange-700 text-xs font-bold tracking-wide mb-2.5">
+                    <i class="fas fa-headphones-alt text-[10px]"></i> Audio Track Ready
+                </div>
+                
+                <h3 id="musicTitle" class="result-title text-base sm:text-lg font-extrabold text-slate-800 text-center max-w-md line-clamp-2 mb-4 leading-snug">Judul Lagu...</h3>
+                
+                <!-- Modern Styled Audio Player Container -->
+                <div class="w-full max-w-md bg-white/95 p-3 rounded-2xl shadow-sm border border-orange-100 mb-6 flex items-center">
+                    <audio id="audioPreview" controls class="w-full h-10 outline-none"></audio>
+                </div>
+                
+                <!-- Area Tombol Download MP3 Luxury -->
+                <div id="musicDownloadBtnArea" class="w-full max-w-sm"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === SECTION 4: HISTORY (GOOGLE SHEETS SYNCED) === -->
+    <div class="container relative overflow-hidden rounded-3xl bg-white/85 backdrop-blur-2xl border border-white/80 p-6 sm:p-8 shadow-[0_20px_50px_rgba(251,146,60,0.1)] transition-all duration-300" id="history-section">
+        <div class="flex justify-between items-center pb-4 mb-4 border-b border-orange-100">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center text-sm font-bold">
+                    <i class="fas fa-history"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg sm:text-xl font-bold text-slate-800">Riwayat Download</h2>
+                    <p class="text-xs text-slate-400 hidden sm:block">Tersimpan otomatis ke database</p>
+                </div>
+            </div>
+            <button onclick="clearHistory()" class="px-4 py-2 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-semibold border border-rose-200/80 transition flex items-center gap-1.5 shadow-sm active:scale-95">
+                <i class="fas fa-trash-alt text-[10px]"></i> Bersihkan
+            </button>
+        </div>
+
+        <!-- Horizontal Scrollable History Grid (No Overflow/Nyungsep) -->
+        <div id="history-list" class="history-grid flex gap-3.5 overflow-x-auto pb-3 pt-1 scrollbar-thin scrollbar-thumb-orange-300 scrollbar-track-transparent">
+            <!-- Items diisi via JavaScript -->
+        </div>
+    </div>
+
+</div>
+<!-- ================= 2. ABOUT SECTION (HIGH-CONVERTING SAAS LAYOUT) ================= -->
+
+<div class="server-status">
+    <div id="status-dot" class="status-dot"></div>
+    <span id="status-text">Checking System...</span>
+</div>
+    <!-- ================= 3. FOOTER (FULL-WIDTH LUXURY DARK SLATE) ================= -->
+<footer class="w-full bg-slate-950 text-slate-300 border-t border-slate-800/80 pt-16 pb-12 mt-12 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Grid 4 Kolom Footer -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-slate-800">
+            
+            <!-- Kolom 1: Brand & Profil (5 Kolom) -->
+            <div class="lg:col-span-5 flex flex-col items-start">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-400 to-orange-500 flex items-center justify-center text-white shadow-md shadow-orange-500/20">
+                        <i class="fas fa-cloud-download-alt text-base"></i>
+                    </div>
+                    <span class="text-2xl font-black text-white tracking-tight">
+                        Social<span class="bg-gradient-to-r from-orange-400 via-amber-400 to-rose-400 bg-clip-text text-transparent">Saver</span>
+                    </span>
+                </div>
+                <p class="text-sm text-slate-400 mt-4 leading-relaxed max-w-sm">
+                    Aplikasi pengunduh media sosial berbasis web tercepat dan gratis. Terintegrasi langsung dengan API terenkripsi dan database Google Apps Script.
+                </p>
+                <div class="flex items-center gap-3 mt-6">
+                    <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-red-500 hover:border-red-500/50 transition cursor-pointer">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-slate-500 transition cursor-pointer">
+                        <i class="fab fa-tiktok"></i>
+                    </div>
+                    <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-rose-500 hover:border-rose-500/50 transition cursor-pointer">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-blue-500 hover:border-blue-500/50 transition cursor-pointer">
+                        <i class="fab fa-facebook"></i>
+                    </div>
+                    <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-cyan-400 hover:border-cyan-400/50 transition cursor-pointer">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kolom 2: Fitur Utama (2 Kolom) -->
+            <div class="lg:col-span-2">
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Fitur Unduh</h4>
+                <ul class="space-y-2.5 text-xs font-semibold text-slate-400">
+                    <li><a href="#urlInput" class="hover:text-orange-400 transition">Video MP4 HD</a></li>
+                    <li><a href="#imgUrlInput" class="hover:text-orange-400 transition">Foto & Carousel IG</a></li>
+                    <li><a href="#musicUrlInput" class="hover:text-orange-400 transition">Audio Lagu MP3</a></li>
+                    <li><a href="#urlInput" class="hover:text-orange-400 transition">TikTok No Watermark</a></li>
+                    <li><a href="#urlInput" class="hover:text-orange-400 transition">YouTube Downloader</a></li>
+                </ul>
+            </div>
+
+            <!-- Kolom 3: Navigasi Cepat (2 Kolom) -->
+            <div class="lg:col-span-2">
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Navigasi</h4>
+                <ul class="space-y-2.5 text-xs font-semibold text-slate-400">
+                    <li><a href="#" class="hover:text-orange-400 transition">Beranda</a></li>
+                    <li><a href="#history-section" class="hover:text-orange-400 transition">Riwayat Unduhan</a></li>
+                    <li><a href="#about-section" class="hover:text-orange-400 transition">Tentang Kami</a></li>
+                    <li><a href="https://rapidapi.com" target="_blank" class="hover:text-orange-400 transition">RapidAPI Hub</a></li>
+                    <li><a href="#" class="hover:text-orange-400 transition">Status Server</a></li>
+                </ul>
+            </div>
+
+            <!-- Kolom 4: Disclaimer & Legal (3 Kolom) -->
+            <div class="lg:col-span-3">
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Pemberitahuan Hak Cipta</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Social Saver adalah alat utilitas gratis yang hanya memproses konten publik. Kami tidak menyimpan file video di server kami. Seluruh hak cipta, merek dagang, dan kepemilikan konten sepenuhnya milik kreator dan platform terkait.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Bagian Hak Cipta Bawah -->
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 text-center sm:text-left">
+            <div>
+                © 2026 <span class="text-white font-bold">Social Saver</span>. Seluruh Hak Cipta Dilindungi Undang-Undang.
+            </div>
+            <div class="flex items-center gap-6 text-slate-400">
+                <a href="#" class="hover:text-white transition">Kebijakan Privasi</a>
+                <a href="#" class="hover:text-white transition">Syarat & Ketentuan</a>
+                <a href="#" class="hover:text-white transition">Kontak Bantuan</a>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+<!-- JavaScript Toggle Menu Mobile -->
+<script>
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobile-menu');
+        const icon = document.getElementById('menu-icon');
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+            icon.className = 'fas fa-times';
+        } else {
+            menu.classList.add('hidden');
+            icon.className = 'fas fa-bars';
+        }
+    }
+</script>
+    <script>
+        const currentUser = JSON.parse(localStorage.getItem('socialSaver_user') || sessionStorage.getItem('socialSaver_user') || 'null');
+        const currentToken = localStorage.getItem('socialSaver_token') || sessionStorage.getItem('socialSaver_token');
+
+        // Proteksi Halaman: Jika belum login, tendang langsung ke index.html
+        if (!currentUser || !currentToken) {
+            window.location.replace('index.html');
+        }
+
+       // Ganti URL di bawah ini dengan URL Web App hasil Deploy Google Apps Script Anda
+const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbw5kQPw_TSlVePJ4Ujcy_FRQ_ksz8PfckLLSvf8_WrCA7i_geFHLZmD9zeBowxYRoIm/exec';
+
+/**
+ * Helper terpadu untuk komunikasi dengan Backend Google Apps Script
+ * Menggunakan mode text/plain untuk melewati batasan CORS OPTIONS preflight pada GAS
+ */
+async function callBackend(action, payload = {}) {
+    const response = await fetch(BACKEND_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify({ action: action, payload: payload })
+    });
+
+    if (!response.ok) {
+        throw new Error(`Koneksi Backend gagal (Status ${response.status})`);
+    }
+
+    const result = await response.json();
+    return result;
+}
+        // 1. Fungsi Load History saat Website Dibuka
+        document.addEventListener('DOMContentLoaded', loadHistory);
+
+       // 1. Fungsi Load History Terhubung ke Google Sheets
+// =========================================================================
+        // 1. FUNGSI LOAD HISTORY (TETAP MUNCUL WALAUPUN RIWAYAT MASIH KOSONG)
+        // =========================================================================
+        async function loadHistory() {
+            const historyList = document.getElementById('history-list');
+            const historySection = document.getElementById('history-section');
+
+            if (!historyList || !historySection) return;
+
+            // KUNCI: Pastikan section riwayat SELALU TAMPIL
+            historySection.style.display = 'block';
+
+            if (!currentUser || !currentUser.email) {
+                historyList.innerHTML = `<div class="text-xs text-slate-400 py-4 text-center w-full">Silakan login kembali.</div>`;
+                return;
+            }
+
+            try {
+                // Minta riwayat KHUSUS akun yang sedang login
+                const res = await callBackend('getHistory', { userEmail: currentUser.email });
+                
+                // Jika riwayat akun ini masih kosong, tampilkan pesan elegan (jangan disembunyikan kotaknya)
+                if (!res.success || !res.data || res.data.length === 0) {
+                    historyList.innerHTML = `
+                        <div class="flex flex-col items-center justify-center py-6 w-full text-center">
+                            <div class="w-10 h-10 rounded-full bg-orange-100 text-orange-500 flex items-center justify-center text-sm mb-2 shadow-sm">
+                                <i class="fas fa-folder-open"></i>
+                            </div>
+                            <span class="text-xs font-bold text-slate-700">Belum ada riwayat unduhan</span>
+                            <span class="text-[11px] text-slate-400 mt-0.5">Media yang Anda unduh di akun <strong class="text-orange-600">${currentUser.email}</strong> akan tersimpan di sini.</span>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Jika ada data, tampilkan kartu riwayat
+                const historyData = res.data;
+                historyList.innerHTML = '';
+
+                historyData.forEach(item => {
+                    const proxyThumb = item.thumb 
+                        ? `https://wsrv.nl/?url=${encodeURIComponent(item.thumb)}&w=200`
+                        : 'https://via.placeholder.com/150?text=No+Thumb';
+
+                    const div = document.createElement('div');
+                    div.className = 'history-item';
+                    div.innerHTML = `
+                        <div class="history-tag">${item.type || 'Media'}</div>
+                        <img src="${proxyThumb}" class="history-thumb" onerror="this.src='https://via.placeholder.com/150?text=Error'">
+                        <div class="history-title" title="${item.title || ''}">${item.title || 'No Title'}</div>
+                        <a href="${item.url}" target="_blank" class="btn-history-action">
+                            <i class="fas fa-external-link-alt"></i> Buka Link
+                        </a>
+                    `;
+                    historyList.appendChild(div);
+                });
+            } catch (err) {
+                console.warn('Gagal memuat riwayat:', err);
+                historyList.innerHTML = `<div class="text-xs text-slate-400 py-3 text-center w-full">Gagal menyinkronkan database riwayat.</div>`;
+            }
+        }
+
+        // =========================================================================
+        // 2. FUNGSI SIMPAN RIWAYAT (ISOLASI DATA KE EMAIL USER INI)
+        // =========================================================================
+        async function addToHistory(type, title, thumb, originalUrl) {
+            if (!originalUrl || !currentUser || !currentUser.email) return;
+
+            try {
+                // Kirim userEmail agar backend mencatat riwayat ini HANYA milik user ini
+                await callBackend('addHistory', {
+                    type: type,
+                    title: title || 'No Title',
+                    thumb: thumb || '',
+                    url: originalUrl,
+                    userEmail: currentUser.email // <-- Kunci Isolasi
+                });
+
+                // Muat ulang daftar riwayat
+                loadHistory();
+            } catch (err) {
+                console.error('Gagal mencatat history ke backend:', err);
+            }
+        }
+
+        // =========================================================================
+        // 3. FUNGSI HAPUS RIWAYAT (HANYA MENGHAPUS MILIK USER INI)
+        // =========================================================================
+        async function clearHistory() {
+            if (!currentUser || !currentUser.email) return;
+
+            if (confirm("Hapus seluruh riwayat download di akun pribadi Anda?")) {
+                try {
+                    showToast("Membersihkan riwayat pribadi...", "info");
+                    const res = await callBackend('clearHistory', { userEmail: currentUser.email });
+                    if (res.success) {
+                        loadHistory();
+                        showToast("Riwayat pribadi Anda berhasil dibersihkan.", "success");
+                    } else {
+                        throw new Error(res.message);
+                    }
+                } catch (err) {
+                    showToast("Gagal menghapus riwayat: " + err.message, "error");
+                }
+            }
+        }
+// 3. Fungsi Hapus Semua Riwayat
+async function clearHistory() {
+    if (confirm("Hapus semua riwayat download di database?")) {
+        try {
+            showToast("Menghapus data riwayat...", "info");
+            const res = await callBackend('clearHistory');
+            if (res.success) {
+                localStorage.removeItem('socialSaverHistory');
+                loadHistory();
+                showToast("Riwayat database berhasil dihapus.", "success");
+            } else {
+                throw new Error(res.message);
+            }
+        } catch (err) {
+            showToast("Gagal menghapus riwayat: " + err.message, "error");
+        }
+    }
+}
+        // 1. Auto Paste Music
+        async function pasteMusicLink() {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById('musicUrlInput').value = text;
+                showToast("Link musik ditempel!", "success");
+            } catch (err) {
+                showToast("Izinkan akses clipboard.", "error");
+            }
+        }
+
+        // 2. Fetch Music Data
+async function fetchMusic() {
+    const inputUrl = document.getElementById('musicUrlInput').value.trim();
+    const loader = document.getElementById('loader-music');
+    const resultArea = document.getElementById('result-area-music');
+
+    if (!inputUrl) {
+        showToast("Masukkan link dulu!", "error");
+        return;
+    }
+
+    resultArea.style.display = 'none';
+    loader.style.display = 'block';
+    
+    const audioPlayer = document.getElementById('audioPreview');
+    audioPlayer.pause();
+    audioPlayer.src = "";
+
+    try {
+        // Minta mode 'music' agar YouTube memproses MP3
+        const response = await callBackend('fetchMedia', { url: inputUrl, mode: 'music' });
+
+        if (response.success && (response.data.medias || response.data.url)) {
+            renderMusicResult(response.data);
+        } else {
+            throw new Error(response.message || "Audio tidak ditemukan.");
+        }
+    } catch (error) {
+        console.error(error);
+        showToast(error.message || "Gagal mengambil audio.", "error");
+    } finally {
+        loader.style.display = 'none';
+    }
+}    
+// 3. Render Music Result
+        // REVISI: Render Hasil Musik dengan Tombol Luxury Gradient
+function renderMusicResult(data) {
+    const resultArea = document.getElementById('result-area-music');
+    const thumbImg = document.getElementById('music-thumb');
+    const titleTxt = document.getElementById('musicTitle');
+    const audioPlayer = document.getElementById('audioPreview');
+    const btnArea = document.getElementById('musicDownloadBtnArea');
+
+    // A. Cari Data Audio (Filter MP3/M4A/Audio Type)
+    let audioUrl = null;
+    let quality = "HD 320kbps";
+
+    if (data.medias && Array.isArray(data.medias)) {
+        const found = data.medias.find(m => m.type === 'audio' || m.extension === 'mp3' || m.extension === 'm4a');
+        if (found) {
+            audioUrl = found.url;
+            quality = found.quality || "HD Quality";
+        }
+    } 
+    
+    // Fallback: Jika API kirim object 'music' (TikTok / YouTube)
+    if (!audioUrl && data.music && data.music.url) {
+        audioUrl = data.music.url;
+    }
+
+    if (!audioUrl && data.url && (data.extension === 'mp3' || data.type === 'audio')) {
+        audioUrl = data.url;
+    }
+
+    if (!audioUrl) {
+        showToast("Format Audio (MP3) tidak tersedia untuk link ini.", "error");
+        return;
+    }
+
+    // B. Set Cover & Judul
+    let imgUrl = data.music ? data.music.cover : (data.cover || data.thumbnail);
+    if (!imgUrl) imgUrl = "https://via.placeholder.com/150/f97316/ffffff?text=Music";
+    
+    thumbImg.src = imgUrl;
+
+    let title = "";
+    if (data.music && data.music.title) {
+        title = data.music.title;
+    } else {
+        title = data.title || "Audio Track";
+    }
+    titleTxt.innerText = title;
+
+    // C. Set Pemutar Audio
+    audioPlayer.src = audioUrl;
+
+    // =========================================================================
+    // D. BUAT TOMBOL DOWNLOAD MP3 MEWAH (SUNRISE LUXURY BUTTON)
+    // =========================================================================
+    btnArea.innerHTML = '';
+    const downloadBtn = document.createElement('a');
+    
+    // Memberikan class Tailwind lengkap: bayangan glow, gradient oranye-rose, hover scale
+    downloadBtn.className = 'w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 hover:from-amber-600 hover:to-rose-600 text-white font-extrabold text-sm tracking-wide shadow-[0_10px_25px_-5px_rgba(249,115,22,0.4)] hover:shadow-[0_15px_30px_-5px_rgba(249,115,22,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-3 cursor-pointer no-underline';
+    downloadBtn.href = "#";
+    downloadBtn.innerHTML = `
+        <span class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center text-xs shadow-inner">
+            <i class="fas fa-arrow-down"></i>
+        </span>
+        <span class="text-sm font-bold tracking-wide">Download Audio MP3</span>
+        <span class="text-[10px] font-extrabold uppercase bg-white/25 px-2.5 py-1 rounded-full text-white/95 tracking-wider shadow-sm">
+            High Quality
+        </span>
+    `;
+
+    downloadBtn.onclick = (e) => downloadAudio(e, audioUrl, title);
+    btnArea.appendChild(downloadBtn);
+
+    // Tampilkan Card & Scroll
+    resultArea.style.display = 'block';
+    resultArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    showToast("Audio berhasil ditemukan!", "success");
+
+    const currentMusicUrl = document.getElementById('musicUrlInput').value;
+    addToHistory('Music', titleTxt.innerText, thumbImg.src, currentMusicUrl);
+}
+        // 4. Fungsi Download Audio (Auto Save)
+      // 4. Fungsi Download Audio (Smart Fallback)
+        async function downloadAudio(e, url, filename) {
+            e.preventDefault();
+            const btn = e.target.closest('a');
+            const originalText = btn.innerHTML;
+            
+            // Ubah tombol jadi loading
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Processing...`;
+            btn.style.pointerEvents = 'none';
+
+            try {
+                // Cek dulu: Jika ini link YouTube (googlevideo), jangan dipaksa fetch.
+                // Langsung lempar ke cara aman (Tab Baru) karena pasti kena CORS.
+                if (url.includes('googlevideo.com')) {
+                    throw new Error("YouTube Link Detected (Skip Fetch)");
+                }
+
+                // Untuk link non-YouTube (TikTok/Soundcloud), kita coba fetch blob
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Gagal Fetch");
+
+                const blob = await response.blob();
+                const blobUrl = window.URL.createObjectURL(blob);
+
+                const link = document.createElement('a');
+                link.href = blobUrl;
+                
+                // Bersihkan nama file
+                const safeName = filename.replace(/[^a-z0-9]/gi, '_').substring(0, 30);
+                link.download = `${safeName}.mp3`;
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(blobUrl);
+
+                btn.innerHTML = `<i class="fas fa-check"></i> Selesai!`;
+                showToast("Audio berhasil disimpan!", "success");
+
+            } catch (err) {
+                // --- BAGIAN PENYELAMAT (FALLBACK) ---
+                console.warn("Auto-download diblokir browser, beralih ke Direct Link...");
+                
+                // Buka di tab baru agar user bisa download manual
+                const win = window.open(url, '_blank', 'noopener,noreferrer');
+                if(win) win.opener = null;
+
+                showToast("Download dimulai di tab baru (Tekan titik tiga > Download)", "success");
+                btn.innerHTML = `<i class="fas fa-external-link-alt"></i> Opened`;
+            } finally {
+                // Kembalikan tombol setelah 2 detik
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.pointerEvents = 'auto';
+                }, 2500);
+            }
+        }
+        // 1. Auto Paste untuk Input Gambar
+        async function pasteImageLink() {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById('imgUrlInput').value = text;
+                showToast("Link foto ditempel!", "success");
+            } catch (err) {
+                showToast("Izinkan akses clipboard.", "error");
+            }
+        }
+
+        // 2. Fetch Data Khusus Gambar
+async function fetchImage() {
+    const inputUrl = document.getElementById('imgUrlInput').value.trim();
+    const loader = document.getElementById('loader-img');
+    const resultArea = document.getElementById('result-area-img');
+    const gallery = document.getElementById('image-gallery');
+
+    if (!inputUrl) {
+        showToast("Masukkan link foto dulu!", "error");
+        return;
+    }
+
+    resultArea.style.display = 'none';
+    gallery.innerHTML = '';
+    loader.style.display = 'block';
+
+    try {
+        // Panggil backend Google Apps Script
+        const response = await callBackend('fetchMedia', { url: inputUrl });
+
+        if (response.success && (response.data.medias || response.data.url)) {
+            renderImageResult(response.data);
+        } else {
+            throw new Error(response.message || "Gambar tidak ditemukan.");
+        }
+    } catch (error) {
+        console.error(error);
+        showToast(error.message || "Gagal mengambil gambar.", "error");
+    } finally {
+        loader.style.display = 'none';
+    }
+}
+        // 3. Render Hasil Gambar (Gallery Mode)
+        function renderImageResult(data) {
+            const resultArea = document.getElementById('result-area-img');
+            const gallery = document.getElementById('image-gallery');
+            // ... di dalam renderImageResult(data) ...
+
+    // ... setelah kode: resultArea.style.display = 'block'; ...
+
+    // --- FITUR BARU: TOMBOL COPY CAPTION (PHOTO) ---
+    // 1. Ambil caption asli
+    const fullCaption = data.title || data.description || "";
+    
+    // 2. Cari area header galeri (Kita sisipkan sebelum galeri gambar)
+    // Pastikan kita tidak menumpuk tombol (hapus yang lama dulu)
+    const existingBtn = document.getElementById('btn-copy-photo');
+    if(existingBtn) existingBtn.remove();
+
+    if (fullCaption) {
+        const copyBtn = document.createElement('button');
+        copyBtn.id = 'btn-copy-photo';
+        copyBtn.className = 'btn-copy-caption';
+        copyBtn.style.marginBottom = "20px"; // Jarak ke foto
+        copyBtn.innerHTML = `<i class="far fa-copy"></i> Salin Caption Instagram`;
+        
+        copyBtn.onclick = () => {
+            navigator.clipboard.writeText(fullCaption);
+            copyBtn.innerHTML = `<i class="fas fa-check"></i> Tersalin!`;
+            setTimeout(() => {
+                copyBtn.innerHTML = `<i class="far fa-copy"></i> Salin Caption Instagram`;
+            }, 2000);
+            showToast("Caption foto disalin!", "success");
+        };
+
+        // Masukkan tombol SEBELUM div gallery
+        const gallery = document.getElementById('image-gallery');
+        gallery.parentNode.insertBefore(copyBtn, gallery);
+    }
+    // -----------------------------------------------
+
+// ... lanjut ke loop gambar ...
+            
+            let images = [];
+
+            // A. Logika Deteksi Gambar
+            // Kadang API kirim array di 'medias', kadang single 'url'
+            if (data.medias && Array.isArray(data.medias)) {
+                // Filter hanya yang tipe 'image' atau tidak punya extension mp4
+                images = data.medias.filter(m => !m.extension || m.extension !== 'mp4');
+                // Jika kosong (mungkin API tidak kasih tipe), ambil semua
+                if (images.length === 0) images = data.medias;
+            } else if (data.url) {
+                images.push({ url: data.url });
+            }
+
+            if (images.length === 0) {
+                showToast("Tidak ada gambar ditemukan di link ini.", "error");
+                return;
+            }
+
+            // B. Loop setiap gambar (Fitur Slide IG/TikTok)
+            images.forEach((img, index) => {
+                if(img.url) {
+                    // Gunakan Proxy agar gambar muncul (Fix Error NotSameOrigin)
+                    const proxyUrl = `https://wsrv.nl/?url=${encodeURIComponent(img.url)}`;
+                    
+                    const card = document.createElement('div');
+                    card.className = 'result-card';
+                    card.style.width = '100%'; 
+                    card.style.maxWidth = '300px'; // Agar rapi berjejer
+                    
+                    card.innerHTML = `
+                        <img src="${proxyUrl}" 
+                             class="result-thumb" 
+                             style="height: 250px; object-fit: cover;"
+                             onerror="this.src='https://via.placeholder.com/300?text=Error'">
+                        
+                        <div style="margin-top:10px;">
+                            <a href="#" class="btn-action" onclick="downloadImage(event, '${img.url}')">
+                                <i class="fas fa-download"></i> Download Image ${index + 1}
+                            </a>
+                        </div>
+                    `;
+                    
+                    gallery.appendChild(card);
+                }
+            });
+
+            resultArea.style.display = 'block';
+            showToast(`Berhasil menemukan ${images.length} gambar!`, "success");
+            // Simpan ke History (Type: Photo)
+const currentImgUrl = document.getElementById('imgUrlInput').value;
+// Ambil thumbnail dari gambar pertama
+const firstThumb = images[0].url || 'https://via.placeholder.com/150'; 
+addToHistory('Photo', 'Instagram/TikTok Photo', firstThumb, currentImgUrl);
+            // Scroll otomatis ke bagian hasil gambar
+            resultArea.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 4. Fungsi Download Gambar Aman (Buka Tab Baru via Proxy)
+      // 4. Fungsi Download Gambar Otomatis (Auto Save)
+        async function downloadImage(e, originalUrl) {
+            e.preventDefault();
+            
+            // Ambil elemen tombol yang diklik untuk efek loading
+            const btn = e.target.closest('a') || e.target;
+            const originalText = btn.innerHTML;
+
+            // Ubah teks tombol jadi Loading
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Saving...`;
+            btn.style.pointerEvents = 'none'; // Cegah klik ganda
+
+            try {
+                // 1. Gunakan Proxy agar bisa didownload oleh browser
+                const proxyUrl = `https://wsrv.nl/?url=${encodeURIComponent(originalUrl)}&output=jpg`;
+                
+                // 2. Ambil data gambar (Fetch)
+                const response = await fetch(proxyUrl);
+                
+                if (!response.ok) throw new Error("Gagal mengambil gambar");
+
+                // 3. Ubah data menjadi 'Blob' (File Biner)
+                const blob = await response.blob();
+                
+                // 4. Buat URL sementara di memori browser
+                const blobUrl = window.URL.createObjectURL(blob);
+
+                // 5. Buat Link Gaib untuk memaksa download
+                const link = document.createElement('a');
+                link.href = blobUrl;
+                // Beri nama file otomatis berdasarkan waktu agar unik
+                link.download = `SocialSaver_Img_${Date.now()}.jpg`; 
+                
+                document.body.appendChild(link);
+                link.click(); // Klik otomatis
+                document.body.removeChild(link);
+                
+                // Bersihkan memori
+                window.URL.revokeObjectURL(blobUrl);
+
+                // Kembalikan tombol ke kondisi sukses
+                btn.innerHTML = `<i class="fas fa-check"></i> Saved!`;
+                showToast("Gambar berhasil disimpan!", "success");
+
+            } catch (error) {
+                console.error(error);
+                // Fallback: Jika gagal auto-download, baru buka tab baru (opsi terakhir)
+                window.open(originalUrl, '_blank');
+                showToast("Gagal auto-save, membuka tab baru...", "error");
+            } finally {
+                // Kembalikan tombol ke semula setelah 2 detik
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.pointerEvents = 'auto';
+                }, 2000);
+            }
+        }
+        // Auto Paste Function
+        async function pasteLink() {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById('urlInput').value = text;
+                showToast("Link berhasil ditempel!", "success");
+            } catch (err) {
+                showToast("Gagal menempel link. Izinkan akses clipboard.", "error");
+            }
+        }
+
+        // Main Fetch Function
+async function fetchVideo() {
+    const inputUrl = document.getElementById('urlInput').value.trim();
+    const loader = document.getElementById('loader');
+    const resultArea = document.getElementById('result-area');
+    const btnArea = document.getElementById('downloadButtons');
+
+    if (!inputUrl) {
+        showToast("Harap masukkan link terlebih dahulu!", "error");
+        return;
+    }
+
+    resultArea.style.display = 'none';
+    loader.style.display = 'block';
+    btnArea.innerHTML = '';
+
+    try {
+        // Minta mode 'video' agar YouTube memproses MP4
+        const response = await callBackend('fetchMedia', { url: inputUrl, mode: 'video' });
+
+        if (response.success && (response.data.medias || response.data.url)) {
+            renderResult(response.data);
+        } else {
+            throw new Error(response.message || "Konten tidak ditemukan atau akun private.");
+        }
+    } catch (error) {
+        console.error(error);
+        showToast(error.message || "Terjadi kesalahan.", "error");
+    } finally {
+        loader.style.display = 'none';
+    }
+}
+// Render Result Function
+      function renderResult(data) {
+    const resultArea = document.getElementById('result-area');
+    const thumbImg = document.getElementById('thumb');
+    const titleTxt = document.getElementById('videoTitle');
+    const btnArea = document.getElementById('downloadButtons');
+
+    // 1. Ambil URL Thumbnail Asli
+    let originalThumbUrl = data.cover || data.thumbnail || data.picture;
+
+    // Jika tidak ada URL gambar, pakai placeholder
+    if (!originalThumbUrl) {
+        originalThumbUrl = 'https://via.placeholder.com/600x400/00f2fe/ffffff?text=Social+Saver';
+    }
+
+    // 2. Siapkan URL Cadangan (Proxy)
+    // Ini hanya dipakai jika cara biasa gagal (Khusus untuk IG biasanya)
+    const proxyThumbUrl = `https://wsrv.nl/?url=${encodeURIComponent(originalThumbUrl)}`;
+
+    // 3. LOGIKA SMART IMAGE LOADING
+    // Langkah A: Coba load langsung (Cocok untuk TikTok/X/FB)
+    thumbImg.src = originalThumbUrl;
+
+    // Langkah B: Jika gagal (Error), otomatis pindah ke Proxy
+    thumbImg.onerror = function() {
+        // Cek: Apakah kita sudah coba pakai proxy?
+        if (this.src !== proxyThumbUrl) {
+            console.log("Gagal load langsung, mencoba jalur Proxy...");
+            this.src = proxyThumbUrl; 
+        } else {
+            // Langkah C: Jika Proxy pun gagal, tampilkan pesan error
+            this.src = 'https://via.placeholder.com/600x400/ff4b4b/ffffff?text=No+Preview';
+        }
+    };
+
+   // 3. Set Judul & Caption
+    // PENTING: Simpan teks asli secara penuh sebelum dipotong
+    const fullCaption = data.title || data.description || ""; 
+    
+    // Tampilkan judul yang dipotong (biar tidak kepanjangan di layar)
+    titleTxt.innerText = fullCaption.substring(0, 100) + (fullCaption.length > 100 ? "..." : "");
+
+    // --- FITUR BARU: TOMBOL COPY CAPTION ---
+    // Hapus tombol copy lama jika ada (biar gak dobel saat search ulang)
+    const oldBtn = document.getElementById('btn-copy-video');
+    if(oldBtn) oldBtn.remove();
+
+    // Buat Tombol Baru
+    if (fullCaption) {
+        const copyBtn = document.createElement('button');
+        copyBtn.id = 'btn-copy-video';
+        copyBtn.className = 'btn-copy-caption';
+        copyBtn.innerHTML = `<i class="far fa-copy"></i> Salin Caption / Hashtag`;
+        
+        // Logika Copy ke Clipboard
+        copyBtn.onclick = () => {
+            navigator.clipboard.writeText(fullCaption);
+            
+            // Efek Visual
+            copyBtn.innerHTML = `<i class="fas fa-check"></i> Tersalin!`;
+            setTimeout(() => {
+                copyBtn.innerHTML = `<i class="far fa-copy"></i> Salin Caption / Hashtag`;
+            }, 2000);
+            
+            showToast("Caption berhasil disalin ke clipboard!", "success");
+        };
+
+        // Masukkan tombol SETELAH judul video (titleTxt)
+        titleTxt.parentNode.insertBefore(copyBtn, titleTxt.nextSibling);
+    }
+
+    // 5. Proses Link Download
+    let links = [];
+    if (data.medias && Array.isArray(data.medias)) {
+        links = data.medias;
+    } else if (data.url) {
+        links.push({ url: data.url, quality: 'HD', extension: 'mp4' });
+    }
+
+    // Bersihkan tombol lama
+    btnArea.innerHTML = '';
+
+    // Buat Tombol Baru
+    if (links.length > 0) {
+        links.forEach(media => {
+            if(media.url) {
+                const linkBtn = document.createElement('a');
+                linkBtn.href = "#"; 
+                linkBtn.className = "btn-action";
+                
+                let label = "Download";
+                if (media.quality) label += ` ${media.quality}`;
+                if (media.extension === 'mp3' || media.type === 'audio') {
+                    label = "Download Audio";
+                }
+
+                linkBtn.innerHTML = `<i class="fas fa-cloud-download-alt"></i> ${label}`;
+
+                linkBtn.onclick = (e) => {
+                    e.preventDefault();
+                    // Buka tab baru tanpa referrer
+                    const win = window.open(media.url, '_blank', 'noopener,noreferrer');
+                    if (win) win.opener = null;
+                    showToast("Cek tab baru untuk download", "success");
+                };
+
+                btnArea.appendChild(linkBtn);
+            }
+        });
+        resultArea.style.display = 'block';
+        showToast("Video berhasil ditemukan!", "success");
+       const currentInputUrl = document.getElementById('urlInput').value;
+        const finalThumb = originalThumbUrl || '';
+        const finalTitle = fullCaption || 'Social Video';
+        addToHistory('Video', finalTitle, finalThumb, currentInputUrl);
+    } else {
+        showToast("Link download tidak tersedia.", "error");
+    }
+}
+        // Toast Notification Function
+     // Fungsi Toast Modern & Mewah (Tailwind Compatible)
+function showToast(msg, type = "success") {
+    const toast = document.getElementById('toast');
+    const toastText = document.getElementById('toast-text');
+    const toastIcon = document.getElementById('toast-icon');
+
+    if (!toast || !toastText) return;
+
+    toastText.innerText = msg;
+
+    // Atur ikon dan palet warna cerah sesuai tipe
+    if (type === 'error') {
+        toastIcon.className = "flex-shrink-0 w-8 h-8 rounded-xl bg-gradient-to-tr from-rose-500 to-red-500 text-white flex items-center justify-center shadow-md shadow-red-500/25 text-xs";
+        toastIcon.innerHTML = `<i class="fas fa-exclamation-triangle"></i>`;
+    } else if (type === 'info') {
+        toastIcon.className = "flex-shrink-0 w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-400 to-orange-400 text-white flex items-center justify-center shadow-md shadow-orange-500/25 text-xs";
+        toastIcon.innerHTML = `<i class="fas fa-info"></i>`;
+    } else {
+        // Success (Gradasi Sunset Orange & Gold)
+        toastIcon.className = "flex-shrink-0 w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-400 to-orange-500 text-white flex items-center justify-center shadow-md shadow-orange-500/25 text-xs";
+        toastIcon.innerHTML = `<i class="fas fa-check"></i>`;
+    }
+
+    // Tampilkan dengan efek transisi
+    toast.classList.remove('hidden');
+    toast.classList.remove('opacity-0', 'translate-y-2');
+    toast.classList.add('opacity-100', 'translate-y-0');
+
+    // Auto-close setelah 4 detik
+    clearTimeout(window.toastTimer);
+    window.toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.classList.add('hidden'), 300);
+    }, 4000);
+}
+        // --- FITUR STATUS SERVER ---
+
+// Jalankan cek status saat halaman dimuat
+document.addEventListener('DOMContentLoaded', checkServerStatus);
+
+async function checkServerStatus() {
+    const dot = document.getElementById('status-dot');
+    const text = document.getElementById('status-text');
+
+    try {
+        const res = await callBackend('ping');
+        
+        if (res.success && res.status === 'online') {
+            dot.className = 'status-dot status-online';
+            text.innerText = 'Backend & API Online';
+        } else {
+            throw new Error(res.message || 'API Offline');
+        }
+    } catch (error) {
+        dot.className = 'status-dot status-offline';
+        text.innerText = 'Server Gangguan';
+        console.warn("Status server bermasalah:", error);
+    }
+} 
+ </script>
+</body>
+</html>

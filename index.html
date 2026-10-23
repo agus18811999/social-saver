@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Social Saver | Gateway Akses Eksklusif</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fbbf24'/%3E%3Cstop offset='50%25' stop-color='%23f97316'/%3E%3Cstop offset='100%25' stop-color='%23f43f5e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='18' fill='url(%23grad)'/%3E%3Cpath d='M32 16v24m-8-8 8 8 8-8M20 46h24' stroke='%23ffffff' stroke-width='5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonts: Plus Jakarta Sans & Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fffaf5 0%, #fff3e8 35%, #ffedd5 70%, #fed7aa 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(110px);
+            z-index: 0;
+            pointer-events: none;
+            animation: floatOrb 9s ease-in-out infinite alternate;
+        }
+        .orb-1 {
+            width: 420px;
+            height: 420px;
+            background: rgba(251, 146, 60, 0.28);
+            top: -10%;
+            left: -5%;
+        }
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: rgba(254, 215, 170, 0.45);
+            bottom: -10%;
+            right: -5%;
+            animation-delay: 3s;
+        }
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, -35px) scale(1.08); }
+        }
+
+        /* Input styling */
+        .auth-input {
+            width: 100%;
+            padding: 14px 16px 14px 44px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1.5px solid #fed7aa;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #1e293b;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
+        }
+        .auth-input:focus {
+            background: #ffffff;
+            border-color: #f97316;
+            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15);
+        }
+
+        /* Button Luxury Gradient */
+        .btn-luxury {
+            background: linear-gradient(135deg, #fbbf24 0%, #f97316 50%, #f43f5e 100%);
+            background-size: 200% 200%;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px -5px rgba(249, 115, 22, 0.35);
+        }
+        .btn-luxury:hover {
+            background-position: right center;
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px -5px rgba(249, 115, 22, 0.45);
+        }
+        .btn-luxury:active {
+            transform: translateY(0);
+        }
+
+        /* Tab Transition */
+        .form-pane {
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+        .form-pane.hidden-pane {
+            display: none;
+            opacity: 0;
+            transform: translateY(12px);
+        }
+        .form-pane.active-pane {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Shaking for invalid inputs */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+        .shake {
+            animation: shake 0.4s ease-in-out;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4 sm:p-6 lg:p-8 relative">
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <!-- Notification Toast Floating -->
+    <div id="toast" class="fixed top-5 right-5 sm:top-6 sm:right-6 z-50 transform transition-all duration-300 ease-out hidden max-w-sm w-[90%] sm:w-auto">
+        <div class="flex items-center gap-3.5 px-5 py-4 rounded-2xl bg-white/95 backdrop-blur-xl border border-orange-200/90 shadow-[0_15px_35px_-5px_rgba(249,115,22,0.25)] text-slate-800">
+            <div id="toast-icon" class="flex-shrink-0 w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-400 to-orange-500 text-white flex items-center justify-center shadow-md shadow-orange-500/20 text-xs">
+                <i class="fas fa-check"></i>
+            </div>
+            <div class="flex-1 text-xs sm:text-sm font-semibold text-slate-800 leading-snug" id="toast-text">
+                Notifikasi
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CARD CONTAINER (Split Grid on Desktop, Fluid on Mobile) -->
+    <div class="w-full max-w-5xl bg-white/80 backdrop-blur-2xl rounded-3xl sm:rounded-[32px] border border-white/90 shadow-[0_25px_60px_-15px_rgba(251,146,60,0.2)] overflow-hidden relative z-10 grid grid-cols-1 lg:grid-cols-12 min-h-[640px]">
+        
+        <!-- LEFT COLUMN: Brand Story & Luxury Showcase (Hidden on small mobile if needed, or compact) -->
+        <div class="lg:col-span-5 bg-gradient-to-br from-orange-500 via-amber-500 to-rose-500 p-8 sm:p-12 text-white flex flex-col justify-between relative overflow-hidden">
+            <!-- Ambient Pattern Background -->
+            <div class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
+            <div class="absolute -left-10 -top-10 w-60 h-60 rounded-full bg-rose-600/20 blur-xl pointer-events-none"></div>
+
+            <div class="relative z-10">
+                <!-- Brand Identity -->
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white text-xl shadow-lg">
+                        <i class="fas fa-cloud-download-alt"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-black tracking-tight leading-none text-white">Social<span class="text-amber-200">Saver</span></h1>
+                        <span class="text-[10px] font-bold tracking-widest uppercase text-white/80">Secured Private Vault</span>
+                    </div>
+                </div>
+
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/25 text-xs font-semibold tracking-wide text-white mb-6">
+                    <i class="fas fa-shield-halved text-amber-300"></i> Isolasi Riwayat 100% Personal
+                </div>
+
+                <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight text-white mb-4">
+                    Penyimpanan Media Digital Terenkripsi Milik Anda Sendiri.
+                </h2>
+                <p class="text-xs sm:text-sm text-white/90 leading-relaxed font-normal">
+                    Masuk untuk mengunduh konten ultra HD TikTok, Instagram, Facebook, dan YouTube MP3. Semua link dan riwayat download Anda terlindungi dalam lembar kerja pribadi yang terisolasi.
+                </p>
+            </div>
+
+            <!-- Bottom Badges / Social Proof -->
+            <div class="relative z-10 pt-8 mt-6 border-t border-white/20 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <div class="flex -space-x-2">
+                        <span class="w-7 h-7 rounded-full bg-amber-300 border-2 border-white flex items-center justify-center text-[10px] font-bold text-orange-800">A</span>
+                        <span class="w-7 h-7 rounded-full bg-orange-300 border-2 border-white flex items-center justify-center text-[10px] font-bold text-orange-900">B</span>
+                        <span class="w-7 h-7 rounded-full bg-rose-300 border-2 border-white flex items-center justify-center text-[10px] font-bold text-rose-900">C</span>
+                    </div>
+                    <span class="text-[11px] font-medium text-white/90">Multi-User Ready</span>
+                </div>
+                <div class="text-[11px] font-bold text-white/90 flex items-center gap-1.5">
+                    <i class="fas fa-bolt text-amber-300"></i> Fast Cloud Engine
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Authentication Forms Area -->
+        <div class="lg:col-span-7 p-6 sm:p-10 lg:p-12 flex flex-col justify-center relative bg-white/90">
+            
+            <!-- Quick View Top Navigator (Tabs) -->
+            <div class="flex items-center justify-between pb-6 mb-6 border-b border-orange-100">
+                <div class="flex items-center gap-2">
+                    <button onclick="switchTab('login')" id="tab-btn-login" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-orange-600 bg-orange-50 border border-orange-200/80">
+                        Masuk
+                    </button>
+                    <button onclick="switchTab('register')" id="tab-btn-register" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-500 hover:text-orange-600 hover:bg-orange-50/50">
+                        Daftar Baru
+                    </button>
+                </div>
+                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+                    <i class="fas fa-lock text-[10px] text-orange-500"></i> SSL 256-Bit
+                </span>
+            </div>
+
+            <!-- ================= FORM 1: LOGIN ================= -->
+            <div id="pane-login" class="form-pane active-pane">
+                <div class="mb-6">
+                    <h3 class="text-2xl font-black text-slate-900 tracking-tight">Selamat Datang Kembali</h3>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-1">Akses akun Anda untuk melanjutkan pengunduhan media.</p>
+                </div>
+
+                <form onsubmit="handleLogin(event)" class="space-y-4" id="form-login">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Alamat Email</label>
+                        <div class="relative flex items-center">
+                            <i class="fas fa-envelope absolute left-4 text-orange-400 text-sm"></i>
+                            <input type="email" id="login-email" required placeholder="nama@email.com" class="auth-input">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Kata Sandi</label>
+                            <button type="button" onclick="switchTab('forgot')" class="text-xs font-bold text-orange-600 hover:text-orange-700 transition">
+                                Lupa Sandi?
+                            </button>
+                        </div>
+                        <div class="relative flex items-center">
+                            <i class="fas fa-key absolute left-4 text-orange-400 text-sm"></i>
+                            <input type="password" id="login-password" required placeholder="Minimal 6 karakter" class="auth-input pr-12">
+                            <button type="button" onclick="togglePassVisibility('login-password', this)" class="absolute right-4 text-slate-400 hover:text-orange-500 text-sm focus:outline-none">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-1">
+                        <label class="flex items-center gap-2 cursor-pointer select-none">
+                            <input type="checkbox" id="login-remember" checked class="w-4 h-4 rounded text-orange-500 focus:ring-orange-400 border-orange-300">
+                            <span class="text-xs font-medium text-slate-600">Ingat Saya di Perangkat Ini</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" id="btn-submit-login" class="w-full py-3.5 px-6 rounded-2xl btn-luxury text-white font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-2 mt-4 cursor-pointer">
+                        <span>Masuk ke Akun</span>
+                        <i class="fas fa-arrow-right text-xs"></i>
+                    </button>
+                </form>
+
+                <div class="mt-6 text-center text-xs text-slate-500">
+                    Belum memiliki akun Social Saver? 
+                    <button onclick="switchTab('register')" class="font-bold text-orange-600 hover:text-orange-700">Daftar sekarang</button>
+                </div>
+            </div>
+
+            <!-- ================= FORM 2: REGISTRATION ================= -->
+            <div id="pane-register" class="form-pane hidden-pane">
+                <div class="mb-5">
+                    <h3 class="text-2xl font-black text-slate-900 tracking-tight">Buat Akun Pribadi</h3>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-1">Dapatkan ruang penyimpanan riwayat eksklusif tanpa kuota.</p>
+                </div>
+
+                <form onsubmit="handleRegister(event)" class="space-y-4" id="form-register">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Nama Lengkap</label>
+                        <div class="relative flex items-center">
+                            <i class="fas fa-user absolute left-4 text-orange-400 text-sm"></i>
+                            <input type="text" id="reg-name" required placeholder="Contoh: Alex Pratama" class="auth-input">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Alamat Email</label>
+                        <div class="relative flex items-center">
+                            <i class="fas fa-envelope absolute left-4 text-orange-400 text-sm"></i>
+                            <input type="email" id="reg-email" required placeholder="nama@email.com" class="auth-input">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Kata Sandi Baru</label>
+                        <div class="relative flex items-center">
+                            <i class="fas fa-lock absolute left-4 text-orange-400 text-sm"></i>
+                            <input type="password" id="reg-password" oninput="checkStrength(this.value)" required placeholder="Minimal 6 karakter" class="auth-input pr-12">
+                            <button type="button" onclick="togglePassVisibility('reg-password', this)" class="absolute right-4 text-slate-400 hover:text-orange-500 text-sm focus:outline-none">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <!-- Password Strength Bar -->
+                        <div class="w-full bg-slate-100 h-1.5 rounded-full mt-2 overflow-hidden flex">
+                            <div id="strength-bar" class="h-full bg-rose-500 w-0 transition-all duration-300"></div>
+                        </div>
+                        <div class="flex justify-between items-center mt-1">
+                            <span class="text-[10px] text-slate-400">Kekuatan Sandi</span>
+                            <span id="strength-text" class="text-[10px] font-bold text-slate-500">Sangat Lemah</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btn-submit-register" class="w-full py-3.5 px-6 rounded-2xl btn-luxury text-white font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-2 mt-2 cursor-pointer">
+                        <span>Registrasi Akun Gratis</span>
+                        <i class="fas fa-user-plus text-xs"></i>
+                    </button>
+                </form>
+
+                <div class="mt-5 text-center text-xs text-slate-500">
+                    Sudah memiliki akun? 
+                    <button onclick="switchTab('login')" class="font-bold text-orange-600 hover:text-orange-700">Masuk di sini</button>
+                </div>
+            </div>
+
+            <!-- ================= FORM 3: FORGOT PASSWORD (STEP 1: SEND OTP) ================= -->
+            <div id="pane-forgot" class="form-pane hidden-pane">
+                <div class="mb-6">
+                    <button type="button" onclick="switchTab('login')" class="text-xs font-bold text-orange-600 hover:text-orange-700 flex items-center gap-1.5 mb-3">
+                        <i class="fas fa-arrow-left"></i> Kembali ke Login
+                    </button>
+                    <h3 class="text-2xl font-black text-slate-900 tracking-tight">Atur Ulang Sandi</h3>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-1">Masukkan email terdaftar untuk menerima kode verifikasi OTP 6-digit.</p>
+                </div>
+
+                <form onsubmit="handleSendOtp(event)" class="space-y-4" id="form-forgot">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Alamat Email Terdaftar</label>
+                        <div class="relative flex items-center">
+                            <i class="fas fa-envelope absolute left-4 text-orange-400 text-sm"></i>
+                            <input type="email" id="forgot-email" required placeholder="nama@email.com" class="auth-input">
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btn-submit-forgot" class="w-full py-3.5 px-6 rounded-2xl btn-luxury text-white font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-2 mt-4 cursor-pointer">
+                        <span>Kirim Kode OTP</span>
+                        <i class="fas fa-paper-plane text-xs"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- ================= FORM 4: RESET PASSWORD (STEP 2: VERIFY OTP & NEW PASS) ================= -->
+            <div id="pane-reset" class="form-pane hidden-pane">
+                <div class="mb-5">
+                    <h3 class="text-2xl font-black text-slate-900 tracking-tight">Verifikasi & Kata Sandi Baru</h3>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-1">
+                        Kode OTP dikirim ke <span id="reset-target-email" class="font-bold text-orange-600">email Anda</span>.
+                    </p>
+                </div>
+
+                <form onsubmit="handleResetPassword(event)" class="space-y-4" id="form-reset">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Kode OTP 6-Digit</label>
+                        <div class="relative flex items-center">
+                            <i class="fas fa-shield-alt absolute left-4 text-orange-400 text-sm"></i>
+                            <input type="text" id="reset-otp" maxlength="6" required placeholder="123456" class="auth-input tracking-widest text-base font-bold">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Kata Sandi Baru</label>
+                        <div class="relative flex items-center">
+                            <i class="fas fa-lock absolute left-4 text-orange-400 text-sm"></i>
+                            <input type="password" id="reset-new-password" required placeholder="Minimal 6 karakter" class="auth-input pr-12">
+                            <button type="button" onclick="togglePassVisibility('reset-new-password', this)" class="absolute right-4 text-slate-400 hover:text-orange-500 text-sm focus:outline-none">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btn-submit-reset" class="w-full py-3.5 px-6 rounded-2xl btn-luxury text-white font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-2 mt-2 cursor-pointer">
+                        <span>Simpan Kata Sandi Baru</span>
+                        <i class="fas fa-check-circle text-xs"></i>
+                    </button>
+                </form>
+
+                <div class="mt-4 text-center">
+                    <button type="button" onclick="switchTab('forgot')" class="text-xs font-bold text-slate-500 hover:text-orange-600">
+                        Kirim ulang kode OTP
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC AUTHENTICATION & INTERACTION -->
+    <script>
+        // ================= CONFIGURATION & INIT =================
+        // Sesuaikan dengan deployment URL backend Google Apps Script Anda
+        const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbw5kQPw_TSlVePJ4Ujcy_FRQ_ksz8PfckLLSvf8_WrCA7i_geFHLZmD9zeBowxYRoIm/exec';
+        
+        let pendingResetEmail = '';
+
+        // Cek sesi saat halaman dibuka: jika sudah login, langsung lempar ke dashboard.html
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedUser = localStorage.getItem('socialSaver_user');
+            const savedToken = localStorage.getItem('socialSaver_token');
+            if (savedUser && savedToken) {
+                window.location.replace('dashboard.html');
+            }
+        });
+
+        // ================= HELPER BACKEND CALL =================
+        async function callAuthBackend(action, payload = {}) {
+            const response = await fetch(BACKEND_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ action: action, payload: payload })
+            });
+            if (!response.ok) {
+                throw new Error(`Koneksi Backend gagal (Status ${response.status})`);
+            }
+            return await response.json();
+        }
+
+        // ================= TAB SWITCHER (0.1 SEC INSTANT TRANSITION) =================
+        function switchTab(tab) {
+            const panes = ['login', 'register', 'forgot', 'reset'];
+            panes.forEach(p => {
+                const el = document.getElementById(`pane-${p}`);
+                if (el) {
+                    el.classList.remove('active-pane');
+                    el.classList.add('hidden-pane');
+                }
+            });
+
+            const activeEl = document.getElementById(`pane-${tab}`);
+            if (activeEl) {
+                activeEl.classList.remove('hidden-pane');
+                activeEl.classList.add('active-pane');
+            }
+
+            // Update tab button header
+            const btnLogin = document.getElementById('tab-btn-login');
+            const btnReg = document.getElementById('tab-btn-register');
+            if (tab === 'login') {
+                btnLogin.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-orange-600 bg-orange-50 border border-orange-200/80";
+                btnReg.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-500 hover:text-orange-600 hover:bg-orange-50/50";
+            } else if (tab === 'register') {
+                btnReg.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-orange-600 bg-orange-50 border border-orange-200/80";
+                btnLogin.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-500 hover:text-orange-600 hover:bg-orange-50/50";
+            }
+        }
+
+        // ================= PASSWORD EYE TOGGLE =================
+        function togglePassVisibility(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        }
+
+        // ================= PASSWORD STRENGTH METER =================
+        function checkStrength(password) {
+            const bar = document.getElementById('strength-bar');
+            const txt = document.getElementById('strength-text');
+            let score = 0;
+
+            if (password.length >= 6) score++;
+            if (password.length >= 10) score++;
+            if (/[A-Z]/.test(password)) score++;
+            if (/[0-9]/.test(password)) score++;
+            if (/[^A-Za-z0-9]/.test(password)) score++;
+
+            if (score <= 1) {
+                bar.style.width = '20%';
+                bar.className = 'h-full bg-rose-500 transition-all duration-300';
+                txt.innerText = 'Sangat Lemah';
+                txt.className = 'text-[10px] font-bold text-rose-500';
+            } else if (score === 2 || score === 3) {
+                bar.style.width = '60%';
+                bar.className = 'h-full bg-amber-500 transition-all duration-300';
+                txt.innerText = 'Cukup Bagus';
+                txt.className = 'text-[10px] font-bold text-amber-500';
+            } else {
+                bar.style.width = '100%';
+                bar.className = 'h-full bg-emerald-500 transition-all duration-300';
+                txt.innerText = 'Sangat Kuat & Aman';
+                txt.className = 'text-[10px] font-bold text-emerald-600';
+            }
+        }
+
+        // ================= 1. HANDLE LOGIN =================
+// ================= FUNGSI HELPER PENYIMPANAN AMAN =================
+        function saveSecureStorage(key, value) {
+            try {
+                localStorage.setItem(key, value);
+            } catch (storageError) {
+                console.warn("LocalStorage penuh, membersihkan cache lama...");
+                try {
+                    // Hapus data riwayat lama yang memakan banyak kuota
+                    localStorage.removeItem('socialSaverHistory');
+                    localStorage.setItem(key, value);
+                } catch (e2) {
+                    // Jika masih penuh, gunakan sessionStorage sebagai cadangan
+                    sessionStorage.setItem(key, value);
+                }
+            }
+        }
+
+        // ================= 1. HANDLE LOGIN (DENGAN SAFE STORAGE) =================
+        async function handleLogin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn-submit-login');
+            const originalText = btn.innerHTML;
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+
+            if (!email || !password) {
+                showToast("Email dan sandi wajib diisi!", "error");
+                return;
+            }
+
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Memverifikasi...`;
+            btn.style.pointerEvents = 'none';
+
+            try {
+                const res = await callAuthBackend('login', { email: email, password: password });
+                
+                if (res.success) {
+                    showToast("Login Berhasil! Mengalihkan ke Dashboard...", "success");
+                    
+                    // Simpan token & user dengan fungsi penyimpanan aman anti-kuota penuh
+                    saveSecureStorage('socialSaver_token', res.token);
+                    saveSecureStorage('socialSaver_user', JSON.stringify(res.user));
+                    
+                    // Alihkan cepat ke dashboard.html
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 600);
+                } else {
+                    throw new Error(res.message || "Email atau kata sandi salah.");
+                }
+            } catch (err) {
+                showToast(err.message, "error");
+                document.getElementById('pane-login').classList.add('shake');
+                setTimeout(() => document.getElementById('pane-login').classList.remove('shake'), 500);
+            } finally {
+                btn.innerHTML = originalText;
+                btn.style.pointerEvents = 'auto';
+            }
+        }
+        // ================= 2. HANDLE REGISTER =================
+        async function handleRegister(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn-submit-register');
+            const originalText = btn.innerHTML;
+
+            const name = document.getElementById('reg-name').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            const password = document.getElementById('reg-password').value;
+
+            if (password.length < 6) {
+                showToast("Kata sandi minimal 6 karakter!", "error");
+                return;
+            }
+
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Mendaftarkan Akun...`;
+            btn.style.pointerEvents = 'none';
+
+            try {
+                const res = await callAuthBackend('register', {
+                    name: name,
+                    email: email,
+                    password: password
+                });
+
+                if (res.success) {
+                    showToast("Akun Berhasil Dibuat! Silakan Masuk.", "success");
+                    // Auto-fill ke form login
+                    document.getElementById('login-email').value = email;
+                    document.getElementById('login-password').value = '';
+                    switchTab('login');
+                } else {
+                    throw new Error(res.message || "Gagal membuat akun.");
+                }
+            } catch (err) {
+                showToast(err.message, "error");
+            } finally {
+                btn.innerHTML = originalText;
+                btn.style.pointerEvents = 'auto';
+            }
+        }
+
+        // ================= 3. HANDLE SEND OTP (FORGOT PASS) =================
+        async function handleSendOtp(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn-submit-forgot');
+            const originalText = btn.innerHTML;
+            const email = document.getElementById('forgot-email').value.trim();
+
+            if (!email) {
+                showToast("Masukkan alamat email Anda!", "error");
+                return;
+            }
+
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Mengirim OTP...`;
+            btn.style.pointerEvents = 'none';
+
+            try {
+                const res = await callAuthBackend('forgotPassword', { email: email });
+
+                if (res.success) {
+                    pendingResetEmail = email;
+                    document.getElementById('reset-target-email').innerText = email;
+                    showToast("Kode OTP 6-digit telah dikirim ke email Anda!", "success");
+                    switchTab('reset');
+                } else {
+                    throw new Error(res.message || "Gagal mengirimkan kode OTP.");
+                }
+            } catch (err) {
+                showToast(err.message, "error");
+            } finally {
+                btn.innerHTML = originalText;
+                btn.style.pointerEvents = 'auto';
+            }
+        }
+
+        // ================= 4. HANDLE RESET PASSWORD =================
+        async function handleResetPassword(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn-submit-reset');
+            const originalText = btn.innerHTML;
+
+            const otp = document.getElementById('reset-otp').value.trim();
+            const newPassword = document.getElementById('reset-new-password').value;
+
+            if (otp.length !== 6) {
+                showToast("Kode OTP harus 6 digit!", "error");
+                return;
+            }
+            if (newPassword.length < 6) {
+                showToast("Kata sandi baru minimal 6 karakter!", "error");
+                return;
+            }
+
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Menyimpan Sandi...`;
+            btn.style.pointerEvents = 'none';
+
+            try {
+                const res = await callAuthBackend('verifyOtpAndReset', {
+                    email: pendingResetEmail,
+                    otp: otp,
+                    newPassword: newPassword
+                });
+
+                if (res.success) {
+                    showToast("Kata sandi berhasil diubah! Silakan masuk kembali.", "success");
+                    document.getElementById('login-email').value = pendingResetEmail;
+                    document.getElementById('login-password').value = '';
+                    switchTab('login');
+                } else {
+                    throw new Error(res.message || "Kode OTP salah atau kedaluwarsa.");
+                }
+            } catch (err) {
+                showToast(err.message, "error");
+            } finally {
+                btn.innerHTML = originalText;
+                btn.style.pointerEvents = 'auto';
+            }
+        }
+
+        // ================= TOAST NOTIFICATION COMPATIBLE =================
+        function showToast(msg, type = "success") {
+            const toast = document.getElementById('toast');
+            const toastText = document.getElementById('toast-text');
+            const toastIcon = document.getElementById('toast-icon');
+
+            if (!toast || !toastText) return;
+
+            toastText.innerText = msg;
+
+            if (type === 'error') {
+                toastIcon.className = "flex-shrink-0 w-8 h-8 rounded-xl bg-gradient-to-tr from-rose-500 to-red-500 text-white flex items-center justify-center shadow-md shadow-red-500/25 text-xs";
+                toastIcon.innerHTML = `<i class="fas fa-exclamation-triangle"></i>`;
+            } else if (type === 'info') {
+                toastIcon.className = "flex-shrink-0 w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-400 to-orange-400 text-white flex items-center justify-center shadow-md shadow-orange-500/25 text-xs";
+                toastIcon.innerHTML = `<i class="fas fa-info"></i>`;
+            } else {
+                toastIcon.className = "flex-shrink-0 w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-400 to-orange-500 text-white flex items-center justify-center shadow-md shadow-orange-500/25 text-xs";
+                toastIcon.innerHTML = `<i class="fas fa-check"></i>`;
+            }
+
+            toast.classList.remove('hidden');
+            toast.classList.remove('opacity-0', 'translate-y-2');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.classList.add('hidden'), 300);
+            }, 3800);
+        }
+    </script>
+</body>
+</html>
